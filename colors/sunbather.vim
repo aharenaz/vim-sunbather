@@ -22,13 +22,16 @@ let s:medium_gray     = { "gui": "#767676", "cterm": "243" }
 let s:white           = { "gui": "#F1F1F1", "cterm": "15"  }
 let s:actual_white    = { "gui": "#FFFFFF", "cterm": "231" }
 let s:subtle_black    = { "gui": "#121212", "cterm": "233" }
+let s:subtle_black1   = { "gui": "#1c1c1c", "cterm": "234" }
 let s:light_black     = { "gui": "#262626", "cterm": "235" }
 let s:lighter_black   = { "gui": "#4E4E4E", "cterm": "239" }
 let s:light_gray      = { "gui": "#A8A8A8", "cterm": "248" }
 let s:lighter_gray    = { "gui": "#C6C6C6", "cterm": "251" }
 let s:lightest_gray   = { "gui": "#EEEEEE", "cterm": "255" }
-let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
-let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
+" let s:dark_pink       = { "gui": "#ff5f87", "cterm": "204" }
+" let s:light_pink      = { "gui": "#d75f87", "cterm": "168" }
+let s:dark_pink      = { "gui": "#ff005f", "cterm": "197" }
+let s:light_pink      = { "gui": "#dd005d", "cterm": "161" }
 let s:dark_red        = { "gui": "#C30771", "cterm": "1"   }
 let s:light_red       = { "gui": "#E32791", "cterm": "1"   }
 let s:orange          = { "gui": "#D75F5F", "cterm": "167" }
@@ -41,9 +44,13 @@ let s:light_cyan      = { "gui": "#4FB8CC", "cterm": "14"  }
 let s:dark_green      = { "gui": "#10A778", "cterm": "2"   }
 let s:light_green     = { "gui": "#5FD7A7", "cterm": "10"  }
 let s:light_purple    = { "gui": "#a790d5", "cterm": "140" }
-let s:yellow          = { "gui": "#F3E430", "cterm": "11"  }
-let s:light_yellow    = { "gui": "#ffff87", "cterm": "228" }
+let s:yellow          = { "gui": "#ffff87", "cterm": "228"  }
+let s:light_yellow    = { "gui": "#ffffd7", "cterm": "230" }
 let s:dark_yellow     = { "gui": "#A89C14", "cterm": "3"   }
+
+let s:subtle_red      = { "gui": "#d7875f", "cterm": "173" }
+let s:error_red       = { "gui": "#af0000", "cterm": "124" }
+let s:subtle_cyan     = { "gui": "#87afaf", "cterm": "109" }
 
 let s:background = &background
 
@@ -51,6 +58,7 @@ if &background == "dark"
   let s:bg              = s:black
   let s:bg_subtle       = s:lighter_black
   let s:bg_very_subtle  = s:subtle_black
+  let s:bg_very_subtle1 = s:subtle_black1
   let s:norm            = s:lighter_gray
   let s:norm_subtle     = s:medium_gray
   let s:pink            = s:light_pink
@@ -63,6 +71,7 @@ else
   let s:bg              = s:actual_white
   let s:bg_subtle       = s:light_gray
   let s:bg_very_subtle  = s:lightest_gray
+  let s:bg_very_subtle1 = s:lightest_gray
   let s:norm            = s:light_black
   let s:norm_subtle     = s:medium_gray
   let s:pink            = s:dark_pink
@@ -135,14 +144,15 @@ hi! link Debug            Special
 
 call s:h("Underlined",    {"fg": s:norm, "gui": "underline", "cterm": "underline"})
 call s:h("Ignore",        {"fg": s:bg})
-call s:h("Error",         {"fg": s:actual_white, "bg": s:red, "cterm": "bold"})
+" call s:h("Error",         {"fg": s:actual_white, "bg": s:red, "cterm": "bold"})
+call s:h("Error",         {"fg": s:error_red, "bg": s:bg_very_subtle, "cterm": "bold", "gui": "bold"})
 call s:h("Todo",          {"fg": s:pink, "gui": "underline", "cterm": "underline"})
 call s:h("SpecialKey",    {"fg": s:light_green})
 call s:h("NonText",       {"fg": s:medium_gray})
 call s:h("Directory",     {"fg": s:dark_blue})
 call s:h("ErrorMsg",      {"fg": s:red})
 call s:h("IncSearch",     {"bg": s:yellow, "fg": s:light_black})
-call s:h("Search",        {"bg": s:light_green, "fg": s:light_black})
+call s:h("Search",        {"bg": s:orange, "fg": s:light_black})
 call s:h("MoreMsg",       {"fg": s:medium_gray, "cterm": "bold", "gui": "bold"})
 hi! link ModeMsg MoreMsg
 call s:h("LineNr",        {"fg": s:bg_subtle})
@@ -177,7 +187,8 @@ else
   call s:h("SpellLocal",  {"cterm": "underline", "fg": s:dark_green})
 endif
 
-call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle})
+call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle1})
+" call s:h("Pmenu",         {"fg": s:norm, "bg": s:bg_very_subtle})
 call s:h("PmenuSel",      {"fg": s:subtle_black, "bg": s:pink})
 call s:h("PmenuSbar",     {"fg": s:norm, "bg": s:bg_subtle})
 call s:h("PmenuThumb",    {"fg": s:norm, "bg": s:bg_subtle})
@@ -220,3 +231,30 @@ hi link GitGutterAdd                LineNr
 hi link GitGutterDelete             LineNr
 hi link GitGutterChange             LineNr
 hi link GitGutterChangeDelete       LineNr
+
+" LSP
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=
+
+" QuickFix
+call s:h("QuickFixLine",  {"bg": s:bg_very_subtle1, "gui": "bold", "cterm": "bold"})
+
+" EndOfBuffer
+call s:h("EndOfBuffer",        {"bg": s:bg, "fg": s:bg})
+
+" highlight LspDiagnosticsDefaultError guifg=#770000
+call s:h("LspDiagnosticsDefaultError",          {"fg": s:bg_subtle, "gui": "italic"})
+call s:h("LspDiagnosticsDefaultWarning",        {"fg": s:bg_subtle, "gui": "italic"})
+call s:h("LspDiagnosticsDefaultInformation",    {"fg": s:bg_subtle, "gui": "italic"})
+call s:h("LspDiagnosticsDefaultHint",           {"fg": s:bg_subtle, "gui": "italic"})
+
+call s:h("LspDiagnosticsSignError",          {"fg": s:error_red})
+call s:h("LspDiagnosticsSignWarning",        {"fg": s:subtle_cyan})
+call s:h("LspDiagnosticsSignInformation",    {"fg": s:subtle_cyan})
+call s:h("LspDiagnosticsSignHint",           {"fg": s:subtle_cyan})
+
+call s:h("MatchParen", { "bg": s:bg, "fg": s:pink, "cterm": "underline", "gui": "underline" })
+call s:h("MatchParenCur", { "bg": s:bg, "fg": s:pink, "cterm": "bold", "gui": "bold" })
+call s:h("MatchWordCur", { "bg": s:bg, "fg": s:pink, "cterm": "bold", "gui": "bold" })
