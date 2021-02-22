@@ -258,3 +258,9 @@ call s:h("LspDiagnosticsSignHint",           {"fg": s:subtle_cyan})
 call s:h("MatchParen", { "bg": s:bg, "fg": s:pink, "cterm": "underline", "gui": "underline" })
 call s:h("MatchParenCur", { "bg": s:bg, "fg": s:pink, "cterm": "bold", "gui": "bold" })
 call s:h("MatchWordCur", { "bg": s:bg, "fg": s:pink, "cterm": "bold", "gui": "bold" })
+
+" WhichKey
+highlight! link WhichKey Pmenu
+highlight! link WhichKeySeperator Pmenu
+highlight! link WhichKeyGroup Pmenu
+highlight! link WhichKeyDesc Pmenu
